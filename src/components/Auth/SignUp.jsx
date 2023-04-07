@@ -35,10 +35,7 @@ const SignUp = ({ setSignIn, setShow }) => {
       <div>
         {error && (
           <Alert color="failure">
-            <span>
-              <span className="font-medium">Info alert!</span> Change a few
-              things up and try submitting again.
-            </span>
+            <span className="font-medium">{error}</span>
           </Alert>
         )}
       </div>

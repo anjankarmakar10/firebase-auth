@@ -1,9 +1,35 @@
-import React, { useState } from "react";
-import { Label, TextInput, Button } from "flowbite-react";
+import React, { useRef, useState } from "react";
+import { Label, TextInput, Button, Alert } from "flowbite-react";
+import { useAuth } from "../../contexts/AuthContext";
+const SignIn = ({ setSignIn, setShow }) => {
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const { signInWithEmail } = useAuth();
 
-const SignIn = ({ setSignIn }) => {
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+    try {
+      setError("");
+      setLoading(true);
+      await signInWithEmail(emailRef.current.value, passwordRef.current.value);
+      setShow(false);
+    } catch (error) {
+      setError(error.message);
+    }
+    setLoading(false);
+  };
+
   return (
     <div className="w-full flex flex-col gap-4">
+      <div>
+        {error && (
+          <Alert color="failure">
+            <span className="font-medium">{error}</span>
+          </Alert>
+        )}
+      </div>
       <div>
         <div className="mb-2 block">
           <Label htmlFor="email2" value="Your email" />
@@ -14,6 +40,7 @@ const SignIn = ({ setSignIn }) => {
           placeholder="name@flowbite.com"
           required={true}
           shadow={true}
+          ref={emailRef}
         />
       </div>
       <div>
@@ -25,6 +52,7 @@ const SignIn = ({ setSignIn }) => {
           type="password"
           required={true}
           shadow={true}
+          ref={passwordRef}
         />
       </div>
 
@@ -34,7 +62,9 @@ const SignIn = ({ setSignIn }) => {
       >
         Create a new a account?
       </div>
-      <Button type="submit">Login</Button>
+      <Button disabled={loading} onClick={handleSignIn} type="submit">
+        Login
+      </Button>
     </div>
   );
 };
