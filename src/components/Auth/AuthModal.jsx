@@ -10,9 +10,9 @@ const AuthModal = ({ setShow, show }) => {
   const [signIn, setSignIn] = useState(true);
   const { signUpWithGoogle } = useAuth();
 
-  const handleGoogleSignIn = () => {
+  const handleGoogleSignIn = async () => {
     try {
-      signUpWithGoogle();
+      await signUpWithGoogle();
       setShow(false);
     } catch (error) {
       console.log(error.message);
@@ -25,11 +25,11 @@ const AuthModal = ({ setShow, show }) => {
         <Modal.Header>{signIn ? "Sign In" : "Sign Up"}</Modal.Header>
         <Modal.Body>
           <form className="flex flex-col gap-4">
-            <div className="flex flex-col gap-4 h-[352px] items-center justify-center">
+            <div className="flex flex-col gap-4 min-h-[352px] items-center justify-center">
               {signIn ? (
-                <SignIn setSignIn={setSignIn} />
+                <SignIn setShow={setShow} setSignIn={setSignIn} />
               ) : (
-                <SignUp setSignIn={setSignIn} />
+                <SignUp setShow={setShow} setSignIn={setSignIn} />
               )}
             </div>
 

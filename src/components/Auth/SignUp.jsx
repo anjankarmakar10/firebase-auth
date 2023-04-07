@@ -1,9 +1,47 @@
-import React, { useState } from "react";
-import { Label, TextInput, Button } from "flowbite-react";
+import React, { useState, useRef } from "react";
+import { Label, TextInput, Button, Alert } from "flowbite-react";
 
-const SignUp = ({ setSignIn }) => {
+import { useAuth } from "../../contexts/AuthContext";
+
+const SignUp = ({ setSignIn, setShow }) => {
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const confirmPasswordRef = useRef();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { signUpWithEmail } = useAuth();
+
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+
+    if (passwordRef.current.value !== confirmPasswordRef.current.value) {
+      setError("Password didn't match");
+      return;
+    }
+    try {
+      setError("");
+      setLoading(true);
+      await signUpWithEmail(emailRef.current.value, passwordRef.current.value);
+      setShow(false);
+    } catch (error) {
+      setError("Failed to create an account");
+    }
+
+    setLoading(false);
+  };
+
   return (
     <div className="w-full flex flex-col gap-4">
+      <div>
+        {error && (
+          <Alert color="failure">
+            <span>
+              <span className="font-medium">Info alert!</span> Change a few
+              things up and try submitting again.
+            </span>
+          </Alert>
+        )}
+      </div>
       <div>
         <div className="mb-2 block">
           <Label htmlFor="email2" value="Your email" />
@@ -14,6 +52,7 @@ const SignUp = ({ setSignIn }) => {
           placeholder="name@flowbite.com"
           required={true}
           shadow={true}
+          ref={emailRef}
         />
       </div>
       <div>
@@ -25,6 +64,7 @@ const SignUp = ({ setSignIn }) => {
           type="password"
           required={true}
           shadow={true}
+          ref={passwordRef}
         />
       </div>
       <div>
@@ -36,6 +76,7 @@ const SignUp = ({ setSignIn }) => {
           type="password"
           required={true}
           shadow={true}
+          ref={confirmPasswordRef}
         />
       </div>
       <div
@@ -44,7 +85,9 @@ const SignUp = ({ setSignIn }) => {
       >
         Already have a account?
       </div>
-      <Button type="submit">Register new account</Button>
+      <Button disabled={loading} onClick={handleSignUp} type="submit">
+        Register new account
+      </Button>
     </div>
   );
 };

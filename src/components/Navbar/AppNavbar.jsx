@@ -8,8 +8,6 @@ const AppNavbar = () => {
   const [show, setShow] = useState(false);
   const { currentUser, signout } = useAuth();
 
-  const isValidUser = useAuthUser();
-
   return (
     <>
       <Navbar
