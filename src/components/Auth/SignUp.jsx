@@ -46,7 +46,7 @@ const SignUp = ({ setSignIn, setShow }) => {
         <TextInput
           id="email2"
           type="email"
-          placeholder="name@flowbite.com"
+          placeholder="name@domain.com"
           required={true}
           shadow={true}
           ref={emailRef}

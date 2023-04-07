@@ -5,6 +5,7 @@ import {
   signOut,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 const AuthContext = createContext();
 
@@ -30,11 +31,15 @@ const AuthProvider = ({ children }) => {
   };
 
   const signUpWithEmail = async (email, password) => {
-    await createUserWithEmailAndPassword(auth, email, password);
+    return createUserWithEmailAndPassword(auth, email, password);
   };
 
   const signInWithEmail = async (email, password) => {
-    await signInWithEmailAndPassword(auth, email, password);
+    return signInWithEmailAndPassword(auth, email, password);
+  };
+
+  const resetPassword = async (email) => {
+    return sendPasswordResetEmail(auth, email);
   };
 
   const signout = async () => {
@@ -46,6 +51,7 @@ const AuthProvider = ({ children }) => {
     signUpWithGoogle,
     signUpWithEmail,
     signInWithEmail,
+    resetPassword,
     signout,
   };
 

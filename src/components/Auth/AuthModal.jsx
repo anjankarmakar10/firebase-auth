@@ -25,7 +25,7 @@ const AuthModal = ({ setShow, show }) => {
         <Modal.Header>{signIn ? "Sign In" : "Sign Up"}</Modal.Header>
         <Modal.Body>
           <form className="flex flex-col gap-4">
-            <div className="flex flex-col gap-4 min-h-[352px] items-center justify-center">
+            <div className="flex flex-col gap-4  items-center justify-center">
               {signIn ? (
                 <SignIn setShow={setShow} setSignIn={setSignIn} />
               ) : (
@@ -36,7 +36,7 @@ const AuthModal = ({ setShow, show }) => {
             <div onClick={handleGoogleSignIn} className="cursor-pointer">
               <div className="flex gap-2 justify-center items-center rounded-lg bg-[#E1EFFE] p-2 hover:bg-[#c2dffd] transition-all">
                 <img
-                  className="w-10 rounded-full"
+                  className="w-8 rounded-full"
                   src="https://play-lh.googleusercontent.com/6UgEjh8Xuts4nwdWzTnWH8QtLuHqRMUB7dp24JYVE2xcYzq4HA8hFfcAbU-R-PC_9uA1"
                   alt=""
                 />

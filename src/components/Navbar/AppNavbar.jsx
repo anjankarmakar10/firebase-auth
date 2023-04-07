@@ -36,6 +36,7 @@ const AppNavbar = () => {
                   alt="User settings"
                   img={currentUser?.photoURL}
                   rounded={true}
+                  color="purple"
                 />
               }
             >
